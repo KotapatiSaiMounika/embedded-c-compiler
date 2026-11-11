@@ -47,9 +47,21 @@ foreach(test_src ${TEST_SOURCES})
 endforeach()
 
 # ---------------------------------------------------------------------------
-# REST server (Person 3): enabled automatically once src/server.c exists and
-# cJSON + Mongoose have been added. Left as a hook so this file keeps working.
 # ---------------------------------------------------------------------------
+# Module 3: command-line compiler + VM, and the REST API server.
+#   ./build/compiler_cli program.c     compile and run without a server
+#   ./build/compiler_server            REST API on http://127.0.0.1:8080
+# (src/server.c is excluded from the library above; everything else in src/ is in it.)
+# ---------------------------------------------------------------------------
+add_executable(compiler_cli tools/compiler_cli.c)
+target_link_libraries(compiler_cli PRIVATE compiler)
+target_compile_options(compiler_cli PRIVATE -Wall -Wextra -Wpedantic)
+
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/server.c)
-    message(STATUS "src/server.c found - add the cJSON/Mongoose setup for compiler_server here")
+    add_executable(compiler_server src/server.c)
+    target_link_libraries(compiler_server PRIVATE compiler)
+    target_compile_options(compiler_server PRIVATE -Wall -Wextra -Wpedantic)
+    if(WIN32)
+        target_link_libraries(compiler_server PRIVATE ws2_32)
+    endif()
 endif()

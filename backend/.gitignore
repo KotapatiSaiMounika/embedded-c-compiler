@@ -1,3 +1,4 @@
 build/
 build_*/
 *:Zone.Identifier
+build*
