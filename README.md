@@ -53,4 +53,5 @@ No browser? Compile and run a program straight from the command line:
 
 - [Supported grammar and module interfaces](docs/grammar.md)
 - [Module 1: lexer and parser](docs/module1_lexer_parser.md)
+-  [Module 2: semantic analysis, symbol table, IR generation and optimization](docs/module2_semantic_ir_optimizer.md)
 - [Module 3: code generation, VM, REST API and frontend](docs/module3_codegen_vm_api.md)
